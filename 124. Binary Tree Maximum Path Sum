@@ -1,0 +1,36 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+ //in this we have used the calculate height method only, we will maintain a maxi variable which will be MIN_VALUE, as we are dealing with negative values as well.
+ 
+class Solution {
+    int maxSum = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        findMaxSum(root);
+        return maxSum;
+    }
+
+    public int findMaxSum(TreeNode root){
+        if(root == null) return 0;
+
+        int leftSum = findMaxSum(root.left);
+        int rightSum = findMaxSum(root.right);
+
+        maxSum = Math.max(maxSum, (leftSum < 0 ? 0:leftSum) + (rightSum < 0 ? 0:rightSum) + root.val);
+
+        return Math.max((leftSum < 0 ? 0:leftSum), (rightSum < 0 ? 0:rightSum)) + root.val;
+    }
+}
