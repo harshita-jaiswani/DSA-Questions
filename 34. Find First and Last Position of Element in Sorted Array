@@ -1,0 +1,68 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        
+        //this is in O(N)
+        // int[] ans = {-1,-1};
+        // for(int i = 0; i < nums.length; i++){
+        //     if(nums[i] == target){
+        //         ans[0] = i;
+        //         break;
+        //     }
+        // }
+        // for(int i = nums.length-1; i >= 0; i--){
+        //     if(nums[i] == target){
+        //         ans[1] = i;
+        //         break;
+        //     }
+        // }
+        // return ans;
+
+
+//this is binary search method --> little diff from original
+//in this if we found the target, we still have to serach for the first occurence, so we will
+//make end = mid - 1 and then get the first occurence(because it will definitely present at left side), same with last occurence, to get the
+//last position of the target, it will be present at right side.
+
+//therefore need to perform binary search two times
+
+        int[] ans = {-1,-1};
+        if(nums.length == 0) return ans;
+
+//for first occurence
+        int start = 0;
+        int end = nums.length - 1;
+        while(start<=end){
+            int mid = start + (end-start)/2;
+            if(target == nums[mid]){
+                ans[0] = mid;
+                end = mid - 1;                      //here we will go deeper in left side
+            }
+            else if(target<nums[mid]){
+                end = mid - 1;
+            }
+            else
+            start = mid + 1;
+        }
+
+
+//for last occurence
+
+        start = 0;
+        end = nums.length - 1;
+        while(start<=end){
+            int mid = start + (end-start)/2;
+            if(target == nums[mid]){
+                ans[1] = mid;
+                start = mid + 1;                   // go deeper in right side
+            }
+            else if(target<nums[mid]){
+                end = mid - 1;
+            }
+            else
+            start = mid + 1;
+        }
+
+        return ans;
+        
+    }
+}
