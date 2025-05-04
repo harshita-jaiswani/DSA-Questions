@@ -1,0 +1,49 @@
+//We can do this with recursion, but it will give time limit exceed, because for longer arrays this is not feasible, so we can do it in O(N) approach also
+
+// class Solution {
+//     public boolean flag = false;
+//     public boolean isSubsequence(String s, String t) {
+//         subSequence(s, t, 0, "");
+//         return flag;
+//     }
+
+//     public void subSequence(String s, String t, int i, String newStr){
+//         if(i == t.length()){
+//             if(s.equals(newStr)) flag = true;
+//             return;
+//         }
+
+//         if(flag) return;
+
+//         subSequence(s, t, i+1, newStr + t.charAt(i));
+//         subSequence(s, t, i+1, newStr);
+
+//     }
+// }
+
+
+//Second way TC = O(N), here we can use 2 pointers and check if string s is present in string t
+// Here we are checking if all the chars of s is present in t, so comparing l is equal to size
+// of s string, is yes return true
+
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if(s.equals("")) return true;
+
+        int m = s.length();
+        int n = t.length();
+
+        int l = 0, k = 0;
+        for(int i = 0; i < n; i++){
+            if(l == m) return true;
+            if(s.charAt(l) == t.charAt(k)){
+                l++;
+                k++;
+            }
+            else
+            k++;
+        }
+        if(l == m) return true;
+        return false;
+    }
+}
